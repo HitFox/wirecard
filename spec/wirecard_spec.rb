@@ -20,17 +20,17 @@ describe Wirecard do
   describe 'data storage' do
     let(:storage_id) { 'd738d62b67ea9719f80530e5097beada' }
 
-    # describe 'init' do
-#       subject { Wirecard::DataStorage::Init.new(order_ident: '123').post }
-#
-#       it { is_expected.to eq({storage_id: storage_id, javascript_url: 'https://checkout.wirecard.com/seamless/dataStorage/js/D200001/qmore/d738d62b67ea9719f80530e5097beada/dataStorage.js' }) }
-#     end
+    describe 'init' do
+      subject { Wirecard::DataStorage::Init.new(order_ident: '123').post }
 
-    # describe 'read' do
-#       subject { Wirecard::DataStorage::Read.new(storage_id: storage_id).post }
-#
-#       it { is_expected.to eq({storage_id: storage_id, payment_informations: '0' }) }
-#     end
+      it { is_expected.to eq({storage_id: storage_id, javascript_url: 'https://checkout.wirecard.com/seamless/dataStorage/js/D200001/qmore/d738d62b67ea9719f80530e5097beada/dataStorage.js' }) }
+    end
+
+    describe 'read' do
+      subject { Wirecard::DataStorage::Read.new(storage_id: storage_id).post }
+
+      it { is_expected.to eq({storage_id: storage_id, payment_informations: '0' }) }
+    end
   end
   
   describe 'payment process' do

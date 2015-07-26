@@ -1,8 +1,8 @@
 module Wirecard
   module DataStorage
     class Init < Base
-      def fingerprint_order
-        @fingerprint_order ||= super + [:order_ident, :return_url, :language, :javascript_script_version]
+      def implicit_fingerprint_order
+        @implicit_fingerprint_order ||= super + [:order_ident, :return_url, :language, :javascript_script_version]
       end
       
       def defaults

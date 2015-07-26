@@ -1,25 +1,39 @@
 module Wirecard
   class Request
-    attr_accessor :params, :fingerprint_order, :uri
+    attr_reader :params, :implicit_fingerprint_order, :uri
     
-    def initialize(parameters, fingerprint_order, uri)
-      self.params = parameters
-      self.fingerprint_order = fingerprint_order
-      self.uri = uri
+    def defaults
+      @defaults ||= {
+        params: nil,
+        implicit_fingerprint_order: nil,
+        uri: nil
+      }
+    end
+    
+    def initialize(options)
+      options = defaults.merge(options)
+      raise ArgumentError 'Options must contain parameters: {params: <parameters hash>' unless options[:params]
+      raise ArgumentError 'Options must contain uri: {uri: <wirecard API uri>' unless options[:uri]
+      
+      @params = params_to_wirecard(options[:params])
+      @implicit_fingerprint_order = keys_to_wirecard(options[:implicit_fingerprint_order])
+      @uri = options[:uri]
+      
+      set_fingerprint!
     end
     
     def to_post
-      post_request = Net::HTTP::Post.new(uri.request_uri)
+      post = Net::HTTP::Post.new(uri.request_uri)
       
-      post_request.set_form_data(to_params)
+      post.set_form_data(params)
       
-      post_request["Host"] = Wirecard::Base.config[:host]
-      post_request["User-Agent"] = Wirecard::Base.user_agent
-      post_request["Content-Type"] = 'application/x-www-form-urlencoded'
-      post_request["Content-Length"] = post_request.body.bytesize.to_s
-      post_request["Connection"] = 'close'
+      post["Host"] = Wirecard::Base.config[:host]
+      post["User-Agent"] = Wirecard::Base.user_agent
+      post["Content-Type"] = 'application/x-www-form-urlencoded'
+      post["Content-Length"] = post.body.bytesize.to_s
+      post["Connection"] = 'close'
       
-      post_request
+      post
     end
     
     ### ------------------------------------------ ###
@@ -28,37 +42,33 @@ module Wirecard
     
     private
     
-    def to_params
-      @wirecard_parameters = Hash[params.keys.map{ |key| [camelize(key), params[key]] }]
-      
-      set_fingerprint_order! unless fingerprint_order
-      set_fingerprint!
-      
-      @wirecard_parameters
+    def params_to_wirecard(params)
+      Hash[params.keys.map{ |key| [camelize(key), params[key]] }]
     end
     
-    def set_fingerprint_order!
-      fingerprint_order_string = @wirecard_parameters.keys.select do |key|
-        @wirecard_parameters[key] != nil 
-      end.compact.join(',').concat(',requestFingerprintOrder,secret')
-      
-      @wirecard_parameters.merge!({ 'requestFingerprintOrder' => fingerprint_order_string})
-    end
-    
-    def set_fingerprint!
-      fingerprint_string = if fingerprint_order
-        fingerprint_order.map{ |key| @wirecard_parameters[camelize(key)] }.compact.join
-      else
-        @wirecard_parameters.values.compact.join
-      end.concat(Wirecard::Base.config[:secret])
-      
-      fingerprint = Digest::SHA512.hexdigest(fingerprint_string)
-      
-      @wirecard_parameters.merge!({ 'requestFingerprint' => fingerprint})
+    def keys_to_wirecard(keys)
+      keys.map{ |key| camelize(key) } if keys
     end
     
     def camelize(key)
       key.to_s.gsub(/_(.)/) { |e| $1.upcase }
+    end
+    
+    def fingerprinter
+      @fingerprinter ||= Wirecard::Fingerprint::Sha512.new(params, implicit_fingerprint_order)
+    end
+    
+    def set_fingerprint!
+      set_request_fingerprint_order! unless implicit_fingerprint_order
+      set_request_fingerprint!
+    end
+    
+    def set_request_fingerprint_order!
+      @params.merge!({ 'requestFingerprintOrder' => fingerprinter.request_fingerprint_order })
+    end
+    
+    def set_request_fingerprint!
+      @params.merge!({ 'requestFingerprint' => fingerprinter.request_fingerprint })
     end
   end
 end

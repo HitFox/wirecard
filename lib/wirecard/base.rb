@@ -1,15 +1,7 @@
 module Wirecard
   class Base
     
-    attr_accessor :request
-    
-    def params
-      request.params
-    end
-    
-    def initialize(options = {})
-      self.request = Wirecard::Request.new(defaults.merge(options), fingerprint_order, uri)
-    end
+    attr_reader :request
     
     def defaults
       @defaults ||= {
@@ -18,16 +10,12 @@ module Wirecard
       }
     end
     
-    def fingerprint_order
-      nil
-    end
-    
-    def uri
-      @uri ||= URI.parse(url)
-    end
-    
-    def url
-      raise NotImplementedError, 'A URL must be given to make a call'
+    def initialize(params = {})
+      @request = Wirecard::Request.new({
+        params: defaults.merge(params),
+        implicit_fingerprint_order: implicit_fingerprint_order,
+        uri: uri
+      })
     end
     
     ### ------------------------------------------ ###
@@ -56,5 +44,24 @@ module Wirecard
       
       Wirecard::Response.new(http.request(request.to_post)).to_hash
     end
+    
+    ### ------------------------------------------ ###
+    ### ---------------- Helpers ----------------- ###
+    ### ------------------------------------------ ###
+    
+    private
+    
+    def uri
+      @uri ||= URI.parse(url)
+    end
+    
+    def implicit_fingerprint_order
+      nil
+    end
+    
+    def url
+      raise NotImplementedError, 'A URL must be given to make a call'
+    end
+    
   end
 end
