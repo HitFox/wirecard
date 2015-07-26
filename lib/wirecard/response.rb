@@ -21,7 +21,7 @@ module Wirecard
     end
     
     def extract_key_value(param)
-      [underscore(param[0]).to_sym, param[1][0]]
+      [underscore(param[0]).to_sym, param[1].join(',')]
     end
   end
 end
