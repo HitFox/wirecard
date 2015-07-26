@@ -1,6 +1,8 @@
 # Wirecard
 
-TODO: Write a gem description
+[![Code Climate](https://codeclimate.com/github/DominicBreuker/wirecard/badges/gpa.svg)](https://codeclimate.com/github/DominicBreuker/wirecard)
+
+Implements wirecard API
 
 ## Installation
 
