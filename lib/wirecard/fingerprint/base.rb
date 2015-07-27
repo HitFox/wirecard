@@ -28,13 +28,10 @@ module Wirecard
       def set_request_fingerprint!
         @params.merge!({ 'requestFingerprint' => fingerprint })
       end
-    
+      
       def fingerprint_string
-        if implicit_fingerprint_order
-          implicit_fingerprint_order << [:secret]
-        else
-          (params['requestFingerprintOrder'] || params['responseFingerprintOrder']).split(',')
-        end.map{ |key| params[key] || Wirecard::Base.config[:secret] }.compact.join
+        keys = implicit_fingerprint_order || (params['requestFingerprintOrder'] || params['responseFingerprintOrder']).split(',')
+        keys.map{ |key| key == 'secret' ? Wirecard::Base.config[:secret] : params[key] }.compact.join
       end
       
       def fingerprint
