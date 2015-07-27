@@ -18,14 +18,12 @@ module Wirecard
       @params = params_to_wirecard(options[:params])
       @implicit_fingerprint_order = keys_to_wirecard(options[:implicit_fingerprint_order])
       @uri = options[:uri]
-      
-      set_fingerprint!
     end
     
     def to_post
       post = Net::HTTP::Post.new(uri.request_uri)
       
-      post.set_form_data(params)
+      post.set_form_data(fingerprinted_params)
       
       post["Host"] = Wirecard::Base.config[:host]
       post["User-Agent"] = Wirecard::Base.user_agent
@@ -54,21 +52,8 @@ module Wirecard
       key.to_s.gsub(/_(.)/) { |e| $1.upcase }
     end
     
-    def fingerprinter
-      @fingerprinter ||= Wirecard::Fingerprint::Sha512.new(params, implicit_fingerprint_order)
-    end
-    
-    def set_fingerprint!
-      set_request_fingerprint_order! unless implicit_fingerprint_order
-      set_request_fingerprint!
-    end
-    
-    def set_request_fingerprint_order!
-      @params.merge!({ 'requestFingerprintOrder' => fingerprinter.request_fingerprint_order })
-    end
-    
-    def set_request_fingerprint!
-      @params.merge!({ 'requestFingerprint' => fingerprinter.request_fingerprint })
+    def fingerprinted_params
+      @fingerprinted_params ||= Wirecard::Fingerprint::Sha512.new(params, implicit_fingerprint_order).fingerprinted_params
     end
   end
 end

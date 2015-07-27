@@ -8,19 +8,34 @@ module Wirecard
         @params = params
         @implicit_fingerprint_order = implicit_fingerprint_order
       end
+      
+      def fingerprinted_params
+        set_request_fingerprint_order! unless implicit_fingerprint_order
+        set_request_fingerprint!
+        @params
+      end
+    
+      private
+      
+      def set_request_fingerprint_order!
+        @params.merge!({ 'requestFingerprintOrder' => request_fingerprint_order })
+      end
     
       def request_fingerprint_order
         params.keys.select { |key| params[key] != nil }.join(',').concat(',requestFingerprintOrder,secret')
       end
+      
+      def set_request_fingerprint!
+        @params.merge!({ 'requestFingerprint' => fingerprint })
+      end
     
-      private
-    
-      def request_fingerprint_string
-        if implicit_fingerprint_order
-          implicit_fingerprint_order.map{ |key| params[key] }.compact.join
-        else
-          params.values.compact.join
-        end.concat(Wirecard::Base.config[:secret])
+      def fingerprint_string
+        keys = implicit_fingerprint_order || (params['requestFingerprintOrder'] || params['responseFingerprintOrder']).split(',')
+        keys.map{ |key| params[key] || Wirecard::Base.config[:secret] }.compact.join
+      end
+      
+      def fingerprint
+        raise NotImplementedError, 'Choose a subclass that specifies the method for digest (MD5/SHA512)'
       end
     end
   end

@@ -2,6 +2,7 @@ require "wirecard/version"
 require "wirecard/base"
 require "wirecard/request"
 require "wirecard/response"
+require "wirecard/callback"
 require "wirecard/data_storage/base"
 require "wirecard/data_storage/init"
 require "wirecard/data_storage/read"
@@ -13,6 +14,7 @@ module Wirecard
   autoload :Base, 'wirecard/base'
   autoload :Request, 'wirecard/request'
   autoload :Response, 'wirecard/response'
+  autoload :Callback, 'wirecard/callback'
   autoload :Base, 'wirecard/data_storage/base'
   autoload :Init, 'wirecard/data_storage/init'
   autoload :Read, 'wirecard/data_storage/read'
