@@ -7,6 +7,7 @@ module Wirecard
       @params = params
       
       raise ArgumentError, 'fingerprint order and fingerprint must both be set' unless response_fingerprint && response_fingerprint_order
+      raise ArgumentError, 'parameter hash contain parameters not covered in the fingerprint: ' + unfingerprinted_params.join(',') if unfingerprinted_params.size > 0
       
       truncate_params!
     end
@@ -31,6 +32,10 @@ module Wirecard
     
     def fingerprinted_params
       @fingerprinted_params ||= response_fingerprint_order.split(',')
+    end
+    
+    def unfingerprinted_params
+      @unfingerprinted_params ||= params.keys - fingerprinted_params - ['responseFingerprint']
     end
     
     def truncate_params!
