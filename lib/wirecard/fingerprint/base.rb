@@ -30,8 +30,11 @@ module Wirecard
       end
     
       def fingerprint_string
-        keys = implicit_fingerprint_order || (params['requestFingerprintOrder'] || params['responseFingerprintOrder']).split(',')
-        keys.map{ |key| params[key] || Wirecard::Base.config[:secret] }.compact.join
+        if implicit_fingerprint_order
+          implicit_fingerprint_order << [:secret]
+        else
+          (params['requestFingerprintOrder'] || params['responseFingerprintOrder']).split(',')
+        end.map{ |key| params[key] || Wirecard::Base.config[:secret] }.compact.join
       end
       
       def fingerprint
