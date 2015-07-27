@@ -23,13 +23,13 @@ describe Wirecard do
     describe 'init' do
       subject { Wirecard::DataStorage::Init.new(order_ident: '123').post }
 
-      #it { is_expected.to eq({storage_id: storage_id, javascript_url: 'https://checkout.wirecard.com/seamless/dataStorage/js/D200001/qmore/d738d62b67ea9719f80530e5097beada/dataStorage.js' }) }
+      it { is_expected.to eq({storage_id: storage_id, javascript_url: 'https://checkout.wirecard.com/seamless/dataStorage/js/D200001/qmore/d738d62b67ea9719f80530e5097beada/dataStorage.js' }) }
     end
 
     describe 'read' do
       subject { Wirecard::DataStorage::Read.new(storage_id: storage_id).post }
 
-      #it { is_expected.to eq({storage_id: storage_id, payment_informations: '0' }) }
+      it { is_expected.to eq({storage_id: storage_id, payment_informations: '0' }) }
     end
   end
   
@@ -47,7 +47,7 @@ describe Wirecard do
     describe 'init' do
       subject { Wirecard::PaymentProcess::Init.new(params).post }
 
-      #it { expect(subject.keys).to include(:redirect_url) }
+      it { expect(subject.keys).to include(:redirect_url) }
     end
     
     describe 'callback' do
