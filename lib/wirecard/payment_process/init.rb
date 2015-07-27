@@ -7,6 +7,8 @@ module Wirecard
       
       def defaults
         super.merge({
+          language: Wirecard::Base.config[:language],
+          currency: Wirecard::Base.config[:currency],
           success_url: Wirecard::Base.config[:success_url],
           failure_url: Wirecard::Base.config[:failure_url],
           cancel_url: Wirecard::Base.config[:cancel_url],
