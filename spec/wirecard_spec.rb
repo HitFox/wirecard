@@ -25,11 +25,7 @@ describe Wirecard do
     describe 'init' do
       subject { Wirecard::DataStorage::Init.new(order_ident: '123').post }
 
-<<<<<<< HEAD
-      #it { is_expected.to eq({storage_id: storage_id, javascript_url: 'https://checkout.wirecard.com/seamless/dataStorage/js/D200001/qmore/d738d62b67ea9719f80530e5097beada/dataStorage.js' }) }
-=======
-      it { is_expected.to eq(storage_id: storage_id, javascript_url: 'https://checkout.wirecard.com/seamless/dataStorage/js/D200001/qmore/d738d62b67ea9719f80530e5097beada/dataStorage.js') }
->>>>>>> b6ae57f141604cf7659dbae0e67141c8cba2bcf4
+      #it { is_expected.to eq(storage_id: storage_id, javascript_url: 'https://checkout.wirecard.com/seamless/dataStorage/js/D200001/qmore/d738d62b67ea9719f80530e5097beada/dataStorage.js') }
     end
 
     describe 'read' do
