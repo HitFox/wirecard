@@ -4,4 +4,4 @@ Coveralls.wear!
 require 'pry'
 require 'Wirecard'
 
-Dir["./spec/**/*_shared.rb"].sort.each { |f| require f}
+Dir["./spec/unit_tests/support/**/*.rb"].sort.each { |f| require f}
