@@ -25,8 +25,8 @@ module Wirecard
       
       post.set_form_data(fingerprinted_params)
       
-      post["Host"] = Wirecard::Base.config[:host]
-      post["User-Agent"] = Wirecard::Base.user_agent
+      post["Host"] = Wirecard.config.host
+      post["User-Agent"] = Wirecard.config.user_agent
       post["Content-Type"] = 'application/x-www-form-urlencoded'
       post["Content-Length"] = post.body.bytesize.to_s
       post["Connection"] = 'close'

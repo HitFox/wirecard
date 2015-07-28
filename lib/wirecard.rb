@@ -1,14 +1,15 @@
-require "wirecard/version"
-require "wirecard/base"
-require "wirecard/request"
-require "wirecard/response"
-require "wirecard/callback"
-require "wirecard/data_storage/base"
-require "wirecard/data_storage/init"
-require "wirecard/data_storage/read"
-require "wirecard/fingerprint/base"
-require "wirecard/fingerprint/sha_512"
-require "wirecard/payment_process/init"
+require 'wirecard/version'
+require 'wirecard/base'
+require 'wirecard/configuration'
+require 'wirecard/request'
+require 'wirecard/response'
+require 'wirecard/callback'
+require 'wirecard/data_storage/base'
+require 'wirecard/data_storage/init'
+require 'wirecard/data_storage/read'
+require 'wirecard/fingerprint/base'
+require 'wirecard/fingerprint/sha_512'
+require 'wirecard/payment_process/init'
 
 module Wirecard
   autoload :Base, 'wirecard/base'
@@ -21,4 +22,16 @@ module Wirecard
   autoload :Base, 'wirecard/fingerprint/base'
   autoload :Sha512, 'wirecard/fingerprint/sha_512'
   autoload :Init, 'wirecard/payment_process/init'
+  
+  class << self
+    def configure
+      yield configuration
+    end
+
+    def configuration
+      @configuration ||= Configuration.new
+    end
+    
+    alias :config :configuration
+  end
 end
