@@ -25,7 +25,7 @@ module Wirecard
     def post
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
-      #binding.pry
+      
       Wirecard::Response.new(http.request(request.to_post)).to_hash
     end
     
@@ -33,14 +33,14 @@ module Wirecard
     ### ---------------- Helpers ----------------- ###
     ### ------------------------------------------ ###
     
+    def implicit_fingerprint_order
+      nil
+    end
+    
     private
     
     def uri
       @uri ||= URI.parse(url)
-    end
-    
-    def implicit_fingerprint_order
-      nil
     end
     
     def url

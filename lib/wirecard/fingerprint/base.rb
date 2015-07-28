@@ -30,6 +30,8 @@ module Wirecard
       end
       
       def fingerprint_string
+        raise NoFingerprintOrderGivenError unless implicit_fingerprint_order || params['requestFingerprintOrder'] || params['responseFingerprintOrder']
+        
         keys = implicit_fingerprint_order || (params['requestFingerprintOrder'] || params['responseFingerprintOrder']).split(',')
         keys.map{ |key| key == 'secret' ? Wirecard.config.secret : params[key] }.compact.join
       end
@@ -38,5 +40,7 @@ module Wirecard
         raise NotImplementedError, 'Choose a subclass that specifies the method for digest (MD5/SHA512)'
       end
     end
+    
+    class NoFingerprintOrderGivenError < StandardError; end
   end
 end
