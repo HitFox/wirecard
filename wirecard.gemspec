@@ -6,10 +6,10 @@ require 'wirecard/version'
 Gem::Specification.new do |spec|
   spec.name          = "wirecard"
   spec.version       = Wirecard::VERSION
-  spec.authors       = ["Dominic Breuker"]
-  spec.email         = ["dominic.breuker@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.authors       = ["Dominic Breuker", "Michael Rüffer"]
+  spec.email         = ["dominic.breuker@gmail.com", "mr@hitfoxgroup.com"]
+  spec.summary       = "Wirecard API wrapper"
+  spec.description   = "Implements the Wirecard API for payment services. Currently supports only seamless mode."
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -22,5 +22,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "pry"
-  spec.add_development_dependency "coveralls"
 end
