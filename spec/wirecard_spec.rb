@@ -55,28 +55,30 @@ describe Wirecard do
     describe 'callback' do
       subject { Wirecard::Callback.new(response_params).to_hash }
       
-      let(:response_params) { {
-        "amount" => "1000",
-        "currency" => "EUR", 
-        "paymentType" => "CCARD", 
-        "financialInstitution" => "Visa", 
-        "language" => "de", 
-        "orderNumber" => "5028575", 
-        "paymentState" => "SUCCESS", 
-        "authenticated" => "No", 
-        "anonymousPan" => "0004", 
-        "expiry" => "03/2018", 
-        "cardholder" => "sdg", 
-        "maskedPan" => "940000******0004", 
-        "gatewayReferenceNumber" => "DGW_5028575_RN", 
-        "gatewayContractNumber" => "DemoContractNumber123", 
-        "avsResponseCode" => "X", 
-        "avsResponseMessage" => "Demo AVS ResultMessage", 
-        "avsProviderResultCode" => "X", 
-        "avsProviderResultMessage" => "Demo AVS ProviderResultMessage", 
-        "responseFingerprintOrder" => "amount,currency,paymentType,financialInstitution,language,orderNumber,paymentState,authenticated,anonymousPan,expiry,cardholder,maskedPan,gatewayReferenceNumber,gatewayContractNumber,avsResponseCode,avsResponseMessage,avsProviderResultCode,avsProviderResultMessage,secret,responseFingerprintOrder", 
-        "responseFingerprint"=>response_fingerprint
-      } }
+      let(:response_params) do 
+        {
+          "amount" => "1000",
+          "currency" => "EUR", 
+          "paymentType" => "CCARD", 
+          "financialInstitution" => "Visa", 
+          "language" => "de", 
+          "orderNumber" => "5028575", 
+          "paymentState" => "SUCCESS", 
+          "authenticated" => "No", 
+          "anonymousPan" => "0004", 
+          "expiry" => "03/2018", 
+          "cardholder" => "sdg", 
+          "maskedPan" => "940000******0004", 
+          "gatewayReferenceNumber" => "DGW_5028575_RN", 
+          "gatewayContractNumber" => "DemoContractNumber123", 
+          "avsResponseCode" => "X", 
+          "avsResponseMessage" => "Demo AVS ResultMessage", 
+          "avsProviderResultCode" => "X", 
+          "avsProviderResultMessage" => "Demo AVS ProviderResultMessage", 
+          "responseFingerprintOrder" => "amount,currency,paymentType,financialInstitution,language,orderNumber,paymentState,authenticated,anonymousPan,expiry,cardholder,maskedPan,gatewayReferenceNumber,gatewayContractNumber,avsResponseCode,avsResponseMessage,avsProviderResultCode,avsProviderResultMessage,secret,responseFingerprintOrder", 
+          "responseFingerprint" => response_fingerprint
+        }
+      end
       
       context 'when response fingerprint is valid' do
         let(:response_fingerprint) { "42c937f7712b69210839c8d149bb17a352e04761eb08d67d28b2319b4a254c923b55cd6270c5d03f32cc9613dc53924c52e7a0dd7ad2139a5334a15cb4763e97" }
