@@ -6,8 +6,8 @@ module Wirecard
     def initialize(params)
       @params = params
       
-      raise ArgumentError, 'fingerprint order and fingerprint must both be set' unless response_fingerprint && response_fingerprint_order
-      raise ArgumentError, 'parameter hash contain parameters not covered in the fingerprint: ' + unfingerprinted_params.join(',') if unfingerprinted_params.size > 0
+      raise NoFingerprintError, 'fingerprint order and fingerprint must both be set' unless response_fingerprint && response_fingerprint_order
+      raise UnfingerprintedParamsError, 'parameter hash contain parameters not covered in the fingerprint: ' + unfingerprinted_params.join(',') if unfingerprinted_params.size > 0
       
       truncate_params!
     end
@@ -54,4 +54,7 @@ module Wirecard
       @computed_fingerprint ||= Wirecard::Fingerprint::Sha512.new(params).fingerprint
     end
   end
+  
+  class UnfingerprintedParamsError < StandardError; end
+  class NoFingerprintError < StandardError; end
 end
