@@ -5,33 +5,17 @@ module Wirecard
     
     def defaults
       @defaults ||= {
-        customer_id: Wirecard::Base.config[:customer_id],
-        shop_id: Wirecard::Base.config[:shop_id]
+        customer_id: Wirecard.config.customer_id,
+        shop_id: Wirecard.config.shop_id
       }
     end
     
     def initialize(params = {})
-      @request = Wirecard::Request.new({
+      @request = Wirecard::Request.new(
         params: defaults.merge(params),
         implicit_fingerprint_order: implicit_fingerprint_order,
         uri: uri
-      })
-    end
-    
-    ### ------------------------------------------ ###
-    ### ------------ Configuration --------------- ###
-    ### ------------------------------------------ ###
-    
-    def self.config=(options)
-      @@config = options
-    end
-    
-    def self.config
-      @@config
-    end
-    
-    def self.user_agent
-      '### User Agent ###'
+      )
     end
     
     ### ------------------------------------------ ###

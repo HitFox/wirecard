@@ -6,12 +6,13 @@ module Wirecard
       end
       
       def defaults
-        super.merge({ return_url: 'http://localhost.url',
-          language: 'de',
-          javascript_script_version: 'pci3'
+        super.merge(
+          javascript_script_version: 'pci3',
+          language: Wirecard.config.language,
+          return_url: Wirecard.config.return_url,
           # don't forget to add custom styles for the iFrame
-          #post_params['iframeCssUrl'] ActionController::Base.helpers.asset_url('credit_card_form.css')
-        })
+          # post_params['iframeCssUrl'] ActionController::Base.helpers.asset_url('credit_card_form.css')
+        )
       end
     end
   end

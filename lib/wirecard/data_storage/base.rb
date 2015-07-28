@@ -2,7 +2,7 @@ module Wirecard
   module DataStorage
     class Base < Wirecard::Base
       def url
-        @url ||= [Wirecard::Base.config[:endpoint], :dataStorage, self.class.to_s.split('::').last.downcase].join('/')
+        @url ||= [Wirecard.config.endpoint, :dataStorage, self.class.to_s.split('::').last.downcase].join('/')
       end
       
       def implicit_fingerprint_order
