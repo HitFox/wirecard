@@ -30,10 +30,17 @@ module Wirecard
       end
       
       def fingerprint_string
-        raise NoFingerprintOrderGivenError unless implicit_fingerprint_order || params['requestFingerprintOrder'] || params['responseFingerprintOrder']
+        raise NoFingerprintOrderGivenError unless fingerprint_order = fingerprint_order_from_params
         
-        keys = implicit_fingerprint_order || (params['requestFingerprintOrder'] || params['responseFingerprintOrder']).split(',')
-        keys.map{ |key| key == 'secret' ? Wirecard.config.secret : params[key] }.compact.join
+        fingerprint_order.split(',').map{ |key| key == 'secret' ? Wirecard.config.secret : params[key] }.compact.join
+      end
+      
+      def fingerprint_order_from_params
+        if implicit_fingerprint_order
+          implicit_fingerprint_order.join(',')
+        else
+          params['requestFingerprintOrder'] || params['responseFingerprintOrder']
+        end
       end
       
       def fingerprint
