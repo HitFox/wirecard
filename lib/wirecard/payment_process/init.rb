@@ -5,6 +5,10 @@ module Wirecard
         @url ||= [Wirecard.config.endpoint, :frontend, :init].join('/')
       end
       
+      def redirect_url
+        response[:redirect_url]
+      end
+      
       def defaults
         super.merge(
           language: Wirecard.config.language,
