@@ -1,7 +1,9 @@
 module Wirecard
   class Base
     
-    attr_reader :request, :response
+    attr_reader :request
+    
+    attr_accessor :response
     
     def defaults
       @defaults ||= {
