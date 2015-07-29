@@ -3,7 +3,8 @@ require 'spec_helper'
 RSpec.describe Wirecard::PaymentProcess::Init do
   
   let(:init) { Wirecard::PaymentProcess::Init.new(options) }
-  let(:options) { { payment_type: 'CCARD',
+  let(:options) { { storage_id: "b2737b746627482e0b024097cadb1b41",
+                    payment_type: 'CCARD',
                     amount: '1000',
                     consumer_ip_address: '127.0.0.1',
                     consumer_user_agent: 'some agent',
