@@ -12,8 +12,8 @@ module Wirecard
     
     def initialize(options)
       options = defaults.merge(options)
-      raise ArgumentError 'Options must contain parameters: {params: <parameters hash>' unless options[:params]
-      raise ArgumentError 'Options must contain uri: {uri: <wirecard API uri>' unless options[:uri]
+      raise ArgumentError 'Options must contain params: <parameters hash>' unless options[:params]
+      raise ArgumentError 'Options must contain uri: <wirecard API uri>' unless options[:uri]
       
       @params = params_to_wirecard(options[:params])
       @implicit_fingerprint_order = keys_to_wirecard(options[:implicit_fingerprint_order])
@@ -33,10 +33,6 @@ module Wirecard
       
       post
     end
-    
-    ### ------------------------------------------ ###
-    ### ---------------- Helpers ----------------- ###
-    ### ------------------------------------------ ###
     
     private
     

@@ -1,7 +1,7 @@
 module Wirecard
   class Base
     
-    attr_reader :request
+    attr_reader :request, :response
     
     def defaults
       @defaults ||= {
@@ -18,20 +18,20 @@ module Wirecard
       )
     end
     
-    ### ------------------------------------------ ###
-    ### -------------- API request --------------- ###
-    ### ------------------------------------------ ###
-    
     def post
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       
-      Wirecard::Response.new(http.request(request.to_post)).to_hash
+      self.response = Wirecard::Response.new(http.request(request.to_post)).to_hash
     end
     
-    ### ------------------------------------------ ###
-    ### ---------------- Helpers ----------------- ###
-    ### ------------------------------------------ ###
+    def method_missing(method_name, *args, &block)
+      if response && (response.key?(method_name.to_sym) || response.key?(method_name))
+        response[method_name.to_sym] || response[method_name]
+      else
+        super
+      end
+    end
     
     private
     

@@ -32,6 +32,8 @@ module Wirecard
     def initialize
       @user_agent  = '### User Agent ###'
       @endpoint    = 'https://checkout.wirecard.com/seamless'
+      @host        = 'checkout.wirecard.com'
+      @language    = defined?(I18n) ? I18n.default_locale[0..1] : 'en'
     end
     
   end

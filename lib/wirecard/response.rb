@@ -10,10 +10,6 @@ module Wirecard
       Hash[CGI.parse(body).map{ |param| extract_key_value(param) }]
     end
     
-    ### ------------------------------------------ ###
-    ### ---------------- Helpers ----------------- ###
-    ### ------------------------------------------ ###
-    
     private
     
     def underscore(s)
