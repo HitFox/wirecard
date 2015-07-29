@@ -42,7 +42,8 @@ module Wirecard
     end
     
     def self.create(attributes = {})
-      new(attributes).save
+      object = new(attributes).save
+      object
     end
     
     private
