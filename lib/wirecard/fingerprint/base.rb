@@ -30,13 +30,24 @@ module Wirecard
       end
       
       def fingerprint_string
-        keys = implicit_fingerprint_order || (params['requestFingerprintOrder'] || params['responseFingerprintOrder']).split(',')
-        keys.map{ |key| key == 'secret' ? Wirecard.config.secret : params[key] }.compact.join
+        raise NoFingerprintOrderGivenError unless fingerprint_order = fingerprint_order_from_params
+        
+        fingerprint_order.split(',').map{ |key| key == 'secret' ? Wirecard.config.secret : params[key] }.compact.join
+      end
+      
+      def fingerprint_order_from_params
+        if implicit_fingerprint_order
+          implicit_fingerprint_order.join(',')
+        else
+          params['requestFingerprintOrder'] || params['responseFingerprintOrder']
+        end
       end
       
       def fingerprint
         raise NotImplementedError, 'Choose a subclass that specifies the method for digest (MD5/SHA512)'
       end
     end
+    
+    class NoFingerprintOrderGivenError < StandardError; end
   end
 end

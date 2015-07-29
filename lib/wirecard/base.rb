@@ -33,14 +33,14 @@ module Wirecard
       end
     end
     
+    def implicit_fingerprint_order
+      nil
+    end
+    
     private
     
     def uri
       @uri ||= URI.parse(url)
-    end
-    
-    def implicit_fingerprint_order
-      nil
     end
     
     def url

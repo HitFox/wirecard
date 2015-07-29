@@ -1,6 +1,7 @@
 # Wirecard
 
 [![Code Climate](https://codeclimate.com/github/DominicBreuker/wirecard/badges/gpa.svg)](https://codeclimate.com/github/DominicBreuker/wirecard)
+[![Test Coverage](https://codeclimate.com/github/DominicBreuker/wirecard/badges/coverage.svg)](https://codeclimate.com/github/DominicBreuker/wirecard/coverage)
 
 Implements wirecard API
 
