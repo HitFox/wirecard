@@ -27,6 +27,8 @@ module Wirecard
       self.response = Wirecard::Response.new(http.request(request.to_post)).to_hash
     end
     
+    alias_method :save, :post
+    
     def method_missing(method_name, *args, &block)
       if response && (response.key?(method_name.to_sym) || response.key?(method_name))
         response[method_name.to_sym] || response[method_name]
