@@ -41,6 +41,10 @@ module Wirecard
       nil
     end
     
+    def self.create(attribute = {})
+      new(attributes).save
+    end
+    
     private
     
     def uri
