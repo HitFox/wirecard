@@ -41,7 +41,7 @@ module Wirecard
       nil
     end
     
-    def self.create(attribute = {})
+    def self.create(attributes = {})
       new(attributes).save
     end
     
