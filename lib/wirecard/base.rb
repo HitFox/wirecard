@@ -37,6 +37,10 @@ module Wirecard
       end
     end
     
+    def respond_to_missing?(method_name, include_private = false)
+      response && (response.key?(method_name.to_sym) || response.key?(method_name)) || super
+    end
+    
     def implicit_fingerprint_order
       nil
     end

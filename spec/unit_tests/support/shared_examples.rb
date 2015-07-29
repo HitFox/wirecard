@@ -4,6 +4,7 @@ RSpec.shared_examples 'configuration' do
     endpoint: 'https://checkout.wirecard.com/seamless',
     customer_id: 'D200001',
     shop_id: 'qmore',
+    password: 'jcv45z',
     secret: 'B8AKTPWBRMNBV455FG6M2DANE99WU2',
     success_url: 'http://localhost.success.url',
     failure_url: 'http://localhost.failure.url',
@@ -20,6 +21,7 @@ RSpec.shared_examples 'configuration' do
       configuration.endpoint = config[:endpoint]
       configuration.customer_id = config[:customer_id]
       configuration.shop_id = config[:shop_id]
+      configuration.password = config[:password]
       configuration.secret = config[:secret]
       configuration.success_url = config[:success_url]
       configuration.failure_url = config[:failure_url]

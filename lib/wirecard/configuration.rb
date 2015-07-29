@@ -5,6 +5,8 @@ module Wirecard
     
     attr_accessor :shop_id
     
+    attr_accessor :password
+    
     attr_accessor :host
     
     attr_accessor :user_agent
