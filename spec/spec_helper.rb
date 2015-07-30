@@ -2,7 +2,7 @@ require 'dotenv'
 Dotenv.load
 
 require "codeclimate-test-reporter"
-#CodeClimate::TestReporter.start
+CodeClimate::TestReporter.start
 
 require 'pry'
 require 'Wirecard'
