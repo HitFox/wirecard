@@ -1,0 +1,9 @@
+machine:
+  ruby:
+    version: 2.2.2
+
+test:
+  pre:
+    - bundle exec rake test:prepare
+  override:
+    - bundle exec rspec
