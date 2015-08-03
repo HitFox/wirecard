@@ -3,15 +3,12 @@ require 'spec_helper'
 RSpec.describe Wirecard::PaymentProcess::Init do
   
   let(:init) { Wirecard::PaymentProcess::Init.new(options) }
-  let(:options) { { payment_type: 'CCARD',
-                    amount: '1000',
-                    consumer_ip_address: '127.0.0.1',
-                    consumer_user_agent: 'some agent',
-                    currency: 'USD',
-                    language: 'en',
-                    order_description: 'some description' } }
+  let(:options) { Hash.new.merge(payment_type_data).merge(payment_data).merge(consumer_data) }
+  let(:payment_type_data) { { payment_type: 'CCARD', storage_id: 'b2737b746627482e0b024097cadb1b41' } }
+  let(:payment_data) { { amount: '1000', currency: 'USD', order_description: 'some description' } }
+  let(:consumer_data) { { consumer_ip_address: '127.0.0.1', consumer_user_agent: 'some agent', language: 'en'} }
   
-  include_examples 'configuration'
+  include_context 'configuration'
   
   it { is_expected.to be_a_kind_of(Wirecard::PaymentProcess::Init) }
   
@@ -42,10 +39,30 @@ RSpec.describe Wirecard::PaymentProcess::Init do
   
   describe '#post' do
     subject { init.post }
-    include_examples 'stub requests'
+    include_context 'stub requests'
 
-    context 'when options are valid' do
+    context 'when credit card payment' do
+      let(:payment_type_data) { { payment_type: 'CCARD', storage_id: 'b2737b746627482e0b024097cadb1b41' } }
+      
       it { is_expected.to eq ({redirect_url: "https://checkout.wirecard.com/seamless/frontend/D200001qmore_DESKTOP/select.php?SID=ttkbc64otkqk067oca49ft0cr5" } ) }
+    end
+    
+    context 'when Sofortüberweisung payment' do
+      let(:payment_type_data) { { payment_type: 'SOFORTUEBERWEISUNG' } }
+      
+      it { is_expected.to eq ({redirect_url: "https://checkout.wirecard.com/seamless/frontend/D200001qmore_DESKTOP/select.php?SID=ckovh2titpm7kagm48e532ifc6" } ) }
+    end
+    
+    context 'when SEPA payment' do
+      let(:payment_type_data) { { payment_type: 'SEPA-DD' } }
+      
+      it { is_expected.to eq ({redirect_url: "https://checkout.wirecard.com/seamless/frontend/D200001qmore_DESKTOP/select.php?SID=j5bk04off945jg6qv25imb1en4" } ) }
+    end
+    
+    context 'when PayPal payment' do
+      let(:payment_type_data) { { payment_type: 'PAYPAL' } }
+      
+      it { is_expected.to eq ({redirect_url: "https://checkout.wirecard.com/seamless/frontend/D200001qmore_DESKTOP/select.php?SID=1ccoq6lf3euji7dk018sulomg6" } ) }
     end
 
     context 'when options are invalid' do
@@ -71,6 +88,6 @@ RSpec.describe Wirecard::PaymentProcess::Init do
          :"error.6.error_code" => "11130",
          :"error.6.message" => "USER_AGENT is missing.",
          errors: "6"}) }
-    end
+     end
   end
 end

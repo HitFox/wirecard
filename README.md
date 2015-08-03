@@ -1,5 +1,6 @@
 # Wirecard
 
+[![Circle CI](https://img.shields.io/circleci/project/HitFox/wirecard.svg?style=flat)](https://circleci.com/gh/HitFox/wirecard)
 [![Code Climate](https://codeclimate.com/github/DominicBreuker/wirecard/badges/gpa.svg)](https://codeclimate.com/github/DominicBreuker/wirecard)
 [![Test Coverage](https://codeclimate.com/github/DominicBreuker/wirecard/badges/coverage.svg)](https://codeclimate.com/github/DominicBreuker/wirecard/coverage)
 

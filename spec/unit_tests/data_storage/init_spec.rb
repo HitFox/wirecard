@@ -5,7 +5,7 @@ RSpec.describe Wirecard::DataStorage::Init do
   let(:init) { Wirecard::DataStorage::Init.new(options) }
   let(:options) { { order_ident: 'order123' } }
   
-  include_examples 'configuration'
+  include_context 'configuration'
   
   it { is_expected.to be_a_kind_of(Wirecard::DataStorage::Init) }
   
@@ -32,7 +32,7 @@ RSpec.describe Wirecard::DataStorage::Init do
   
   describe '#post' do
     subject { init.post }
-    include_examples 'stub requests'
+    include_context 'stub requests'
     
     context 'when order_ident is given' do
       it { is_expected.to eq ({javascript_url: "https://checkout.wirecard.com/seamless/dataStorage/js/D200001/qmore/b2737b746627482e0b024097cadb1b41/dataStorage.js",
