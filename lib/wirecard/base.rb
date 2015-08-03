@@ -25,6 +25,7 @@ module Wirecard
       http.use_ssl = true
       
       self.response = Wirecard::Response.new(http.request(request.to_post)).to_hash
+      self
     end
     
     alias_method :save, :post

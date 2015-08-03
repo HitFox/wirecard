@@ -4,7 +4,7 @@ module Wirecard
       
       def self.create(attributes = {})
         object = super
-        object.order_number
+        object.order_number.to_i
       end
       
     end
