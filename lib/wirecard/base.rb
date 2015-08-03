@@ -3,7 +3,7 @@ module Wirecard
     
     attr_reader :request
     
-    attr_accessor :response
+    attr_accessor :response, :params
     
     def defaults
       @defaults ||= {

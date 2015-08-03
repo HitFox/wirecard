@@ -16,6 +16,7 @@ module Wirecard
           confirm_url: Wirecard.config.confirm_url
         )
       end
+
     end
   end
 end
