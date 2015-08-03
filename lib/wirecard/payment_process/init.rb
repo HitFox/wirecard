@@ -1,6 +1,11 @@
 module Wirecard
   module PaymentProcess
     class Init < Wirecard::Base
+      
+      def order_number
+        @order_number ||= Wirecard::Backend::GenerateOrderNumber.create
+      end
+      
       def url
         @url ||= [Wirecard.config.endpoint, :frontend, :init].join('/')
       end
