@@ -3,8 +3,8 @@ module Wirecard
     class GenerateOrderNumber < Base
       
       def self.create(attributes = {})
-        super
-        order_number
+        object = super
+        object.order_number
       end
       
     end
