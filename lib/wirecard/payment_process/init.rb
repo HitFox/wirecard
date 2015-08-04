@@ -16,6 +16,7 @@ module Wirecard
       
       def defaults
         super.merge(
+          order_number: order_number,
           language: Wirecard.config.language,
           currency: Wirecard.config.currency,
           success_url: Wirecard.config.success_url,
