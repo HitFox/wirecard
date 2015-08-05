@@ -37,7 +37,7 @@ RSpec.describe Wirecard::Backend::RecurPayment do
   end
   
   describe '#post' do
-    subject { recur_payment.post }
+    subject { recur_payment.post.response }
     include_context 'stub requests'
     
     context 'when required parameters are given' do

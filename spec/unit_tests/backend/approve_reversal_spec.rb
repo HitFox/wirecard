@@ -30,7 +30,7 @@ RSpec.describe Wirecard::Backend::ApproveReversal do
   end
 
   describe '#post' do
-    subject { approve_reversal.post }
+    subject { approve_reversal.post.response }
     include_context 'stub requests'
     
     context 'when order number is 23473341' do

@@ -28,7 +28,7 @@ RSpec.describe Wirecard::DataStorage::Read do
   end
   
   describe '#post' do
-    subject { read.post }
+    subject { read.post.response }
     include_context 'stub requests'
 
     context 'when storage_id is given' do

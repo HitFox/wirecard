@@ -9,6 +9,7 @@ module Wirecard
         super.merge(
           javascript_script_version: 'pci3',
           language: Wirecard.config.language,
+          return_url: Wirecard.config.return_url
         )
       end
     end

@@ -31,7 +31,7 @@ RSpec.describe Wirecard::Backend::DepositReversal do
   end
   
   describe '#post' do
-    subject { deposit_reversal.post }
+    subject { deposit_reversal.post.response }
     include_context 'stub requests'
     
     context 'when order number is 23473341' do

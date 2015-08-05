@@ -29,7 +29,7 @@ RSpec.describe Wirecard::Backend::GetOrderDetails do
   end
   
   describe '#post' do
-    subject { get_order_details.post }
+    subject { get_order_details.post.response }
     include_context 'stub requests'
 
     context 'when order_number is given' do

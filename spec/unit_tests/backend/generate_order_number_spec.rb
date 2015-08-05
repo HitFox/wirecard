@@ -29,7 +29,7 @@ RSpec.describe Wirecard::Backend::GenerateOrderNumber do
   end
   
   describe '#post' do
-    subject { generate_order_number.post }
+    subject { generate_order_number.post.response }
     include_context 'stub requests'
     
     it { is_expected.to eq({ order_number: '1113051', status: '0' }) }

@@ -32,7 +32,7 @@ RSpec.describe Wirecard::Backend::Refund do
   end
   
   describe '#post' do
-    subject { refund.post }
+    subject { refund.post.response }
     include_context 'stub requests'
     
     context 'when required parameters are given' do

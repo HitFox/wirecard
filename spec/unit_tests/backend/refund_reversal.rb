@@ -31,7 +31,7 @@ RSpec.describe Wirecard::Backend::RefundReversal do
   end
   
   describe '#post' do
-    subject { refund_reversal.post }
+    subject { refund_reversal.post.response }
     include_context 'stub requests'
     
     context 'when required parameters are given' do

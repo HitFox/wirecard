@@ -38,7 +38,7 @@ RSpec.describe Wirecard::Backend::TransferFund::ExistingOrder do
   end
   
   describe '#post' do
-    subject { transfer_fund_existing_order.post }
+    subject { transfer_fund_existing_order.post.response }
     include_context 'stub requests'
     
     context 'when required parameters are given' do

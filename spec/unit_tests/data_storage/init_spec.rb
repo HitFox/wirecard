@@ -31,7 +31,7 @@ RSpec.describe Wirecard::DataStorage::Init do
   end
   
   describe '#post' do
-    subject { init.post }
+    subject { init.post.response }
     include_context 'stub requests'
     
     context 'when order_ident is given' do

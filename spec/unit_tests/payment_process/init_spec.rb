@@ -9,6 +9,7 @@ RSpec.describe Wirecard::PaymentProcess::Init do
   let(:consumer_data) { { consumer_ip_address: '127.0.0.1', consumer_user_agent: 'some agent', language: 'en'} }
   
   include_context 'configuration'
+  include_context 'stub requests'
   
   it { is_expected.to be_a_kind_of(Wirecard::PaymentProcess::Init) }
   
@@ -22,6 +23,7 @@ RSpec.describe Wirecard::PaymentProcess::Init do
     subject { init.defaults }
 
     include_examples 'Wirecard::Base#defaults'
+    it { expect(subject[:order_number]).to eq(1113051) }
     it { expect(subject[:language]).to eq(config[:language]) }
     it { expect(subject[:currency]).to eq(config[:currency]) }
     it { expect(subject[:success_url]).to eq(config[:success_url]) }
@@ -38,8 +40,7 @@ RSpec.describe Wirecard::PaymentProcess::Init do
   end
   
   describe '#post' do
-    subject { init.post }
-    include_context 'stub requests'
+    subject { init.post.response }
 
     context 'when credit card payment' do
       let(:payment_type_data) { { payment_type: 'CCARD', storage_id: 'b2737b746627482e0b024097cadb1b41' } }
@@ -49,19 +50,19 @@ RSpec.describe Wirecard::PaymentProcess::Init do
     
     context 'when Sofortüberweisung payment' do
       let(:payment_type_data) { { payment_type: 'SOFORTUEBERWEISUNG' } }
-      
+
       it { is_expected.to eq ({redirect_url: "https://checkout.wirecard.com/seamless/frontend/D200001qmore_DESKTOP/select.php?SID=ckovh2titpm7kagm48e532ifc6" } ) }
     end
-    
+
     context 'when SEPA payment' do
       let(:payment_type_data) { { payment_type: 'SEPA-DD' } }
-      
+
       it { is_expected.to eq ({redirect_url: "https://checkout.wirecard.com/seamless/frontend/D200001qmore_DESKTOP/select.php?SID=j5bk04off945jg6qv25imb1en4" } ) }
     end
-    
+
     context 'when PayPal payment' do
       let(:payment_type_data) { { payment_type: 'PAYPAL' } }
-      
+
       it { is_expected.to eq ({redirect_url: "https://checkout.wirecard.com/seamless/frontend/D200001qmore_DESKTOP/select.php?SID=1ccoq6lf3euji7dk018sulomg6" } ) }
     end
 

@@ -32,7 +32,7 @@ RSpec.describe Wirecard::Backend::Deposit do
   end
   
   describe '#post' do
-    subject { deposit.post }
+    subject { deposit.post.response }
     include_context 'stub requests'
     
     context 'when order number is 23473341' do
