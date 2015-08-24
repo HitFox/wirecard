@@ -12,7 +12,7 @@ module Wirecard
     end
     
     def fingerprint_valid?
-      !!response_fingerprint && !!response_fingerprint_order && !unfingerprinted_params? && (computed_fingerprint == response_fingerprint)
+      !suspicious_values? && !!response_fingerprint && !!response_fingerprint_order && !unfingerprinted_params? && (computed_fingerprint == response_fingerprint)
     end
     
     private
@@ -35,6 +35,11 @@ module Wirecard
     
     def unfingerprinted_params?
       unfingerprinted_params.size > 0
+    end
+    
+    # scans all parameter values for bit sequence "10000000" (\x80), which indicates a length extension attack on the fingerprint
+    def suspicious_values?
+      params.values.select{ |value| value.bytes.include?(128) }.compact.any?
     end
     
     def underscore(s)
