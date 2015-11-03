@@ -1,3 +1,7 @@
+require_relative 'gem_version'
+
 module Wirecard
-  VERSION = "0.0.2"
+  def self.version
+    gem_version
+  end
 end
