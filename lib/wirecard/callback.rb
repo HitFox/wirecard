@@ -8,7 +8,7 @@ module Wirecard
     end
     
     def to_hash
-      fingerprint_valid? ? params_to_ruby : nil
+      fingerprint_valid? ? params_to_ruby : {}
     end
     
     def fingerprint_valid?

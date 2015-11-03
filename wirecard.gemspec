@@ -5,7 +5,7 @@ require 'wirecard/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "wirecard"
-  spec.version       = Wirecard::VERSION
+  spec.version       = Wirecard.version
   spec.authors       = ["Dominic Breuker", "Michael Rüffer"]
   spec.email         = ["dominic.breuker@gmail.com", "mr@hitfoxgroup.com"]
   spec.summary       = "Wirecard API wrapper"
