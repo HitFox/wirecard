@@ -1,19 +1,19 @@
 module Wirecard
   module PaymentProcess
     class Init < Wirecard::Base
-      
+
       def order_number
         @order_number ||= Wirecard::Backend::GenerateOrderNumber.create
       end
-      
+
       def url
         @url ||= [Wirecard.config.endpoint, :frontend, :init].join('/')
       end
-      
+
       def redirect_url
         response[:redirect_url]
       end
-      
+
       def defaults
         super.merge(
           order_number: order_number,
