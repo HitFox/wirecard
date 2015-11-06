@@ -10,7 +10,7 @@ RSpec.describe Wirecard::PaymentProcess::Init do
 
   before do
     ### stub request to generate order number for this payment process: will return 1113051
-    stub_request(:post, "https://checkout.wirecard.com/seamless/frontend/init").
+    stub_request(:post, "https://checkout.wirecard.com/seamless/backend/generateordernumber").
       with(body: default_request_hash.merge(
         {
           "language"=>"en",
@@ -27,7 +27,6 @@ RSpec.describe Wirecard::PaymentProcess::Init do
   end
 
   include_context 'configuration'
-  include_context 'stub requests'
 
   let(:default_payment_process_request_hash) do
     default_request_hash.merge(

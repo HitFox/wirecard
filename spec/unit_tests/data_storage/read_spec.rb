@@ -30,8 +30,6 @@ RSpec.describe Wirecard::DataStorage::Read do
   describe '#post' do
     subject { read.post.response }
 
-    #include_context 'stub requests'
-
     context 'when storage_id is given' do
       before do
         stub_request(:post, "https://checkout.wirecard.com/seamless/dataStorage/read").
